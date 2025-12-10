@@ -8,8 +8,8 @@ const nextConfig = {
   output: process.env.GITHUB_PAGES ? 'export' : 'standalone',
   
   // Base path for GitHub Pages (repository name)
-  basePath: process.env.GITHUB_PAGES ? '/fafsa-assistant' : '',
-  assetPrefix: process.env.GITHUB_PAGES ? '/fafsa-assistant/' : '',
+  basePath: process.env.GITHUB_PAGES ? '/fafsa_application_assistant' : '',
+  assetPrefix: process.env.GITHUB_PAGES ? '/fafsa_application_assistant/' : '',
   
   // Disable image optimization for static export
   images: process.env.GITHUB_PAGES ? {
