@@ -1,0 +1,18 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Shield Background -->
+  <path d="M60 10L20 30V55C20 75 35 92 60 110C85 92 100 75 100 55V30L60 10Z" fill="url(#ferpa-gradient)" stroke="#0e7490" stroke-width="2"/>
+  
+  <!-- Checkmark -->
+  <path d="M45 60L55 70L75 45" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Text -->
+  <text x="60" y="95" text-anchor="middle" fill="#0e7490" font-family="Arial, sans-serif" font-size="12" font-weight="bold">FERPA</text>
+  <text x="60" y="108" text-anchor="middle" fill="#0e7490" font-family="Arial, sans-serif" font-size="8">COMPLIANT</text>
+  
+  <defs>
+    <linearGradient id="ferpa-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0891b2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0e7490;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>

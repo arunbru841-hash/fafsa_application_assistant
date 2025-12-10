@@ -1,0 +1,50 @@
+# Docker ignore file for Web
+# Reduces build context size and protects sensitive files
+
+# Dependencies
+node_modules
+npm-debug.log*
+
+# Build outputs
+.next
+out
+*.tsbuildinfo
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# IDE and editor
+.idea
+.vscode
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+
+# Test files
+coverage
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+__tests__
+
+# Git
+.git
+.gitignore
+
+# Documentation
+*.md
+!README.md
+
+# Storybook
+.storybook
+storybook-static

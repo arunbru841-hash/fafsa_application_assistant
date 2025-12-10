@@ -1,0 +1,93 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fafsa-ingress
+  namespace: fafsa-assistant
+  labels:
+    app.kubernetes.io/name: fafsa-assistant
+  annotations:
+    # For nginx ingress controller
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "60"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "60"
+    # Rate limiting
+    nginx.ingress.kubernetes.io/limit-rps: "50"
+    nginx.ingress.kubernetes.io/limit-connections: "20"
+    # Security headers
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      add_header X-Frame-Options "SAMEORIGIN" always;
+      add_header X-Content-Type-Options "nosniff" always;
+      add_header X-XSS-Protection "1; mode=block" always;
+      add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    # For cert-manager (automatic SSL)
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+    - hosts:
+        - fafsa-assistant.example.com
+        - api.fafsa-assistant.example.com
+      secretName: fafsa-tls-secret
+  rules:
+    # Main web application
+    - host: fafsa-assistant.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: fafsa-web
+                port:
+                  number: 3000
+    # API subdomain
+    - host: api.fafsa-assistant.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: fafsa-api
+                port:
+                  number: 3001
+---
+# Alternative: Single domain with path-based routing
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fafsa-ingress-path-based
+  namespace: fafsa-assistant
+  labels:
+    app.kubernetes.io/name: fafsa-assistant
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+    - hosts:
+        - fafsa-assistant.example.com
+      secretName: fafsa-tls-secret-path
+  rules:
+    - host: fafsa-assistant.example.com
+      http:
+        paths:
+          # API routes
+          - path: /api(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: fafsa-api
+                port:
+                  number: 3001
+          # Web routes (default)
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: fafsa-web
+                port:
+                  number: 3000

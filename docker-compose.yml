@@ -1,0 +1,148 @@
+# FAFSA Assistant Pro - Docker Compose Configuration
+# Production deployment with all services
+
+version: '3.8'
+
+services:
+  # ==========================================
+  # Frontend (Next.js)
+  # ==========================================
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    container_name: fafsa-web
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      # Client-side API URL must use localhost since browser makes requests directly
+      - NEXT_PUBLIC_API_URL=http://localhost:3001/api
+    depends_on:
+      - api
+    networks:
+      - fafsa-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # ==========================================
+  # Backend API (Express.js)
+  # ==========================================
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    container_name: fafsa-api
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - DATABASE_URL=postgresql://fafsa_user:fafsa_password@postgres:5432/fafsa_db
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=${JWT_SECRET:-change-this-in-production}
+      - CORS_ORIGINS=http://localhost:3000,http://web:3000
+      - COLLEGE_SCORECARD_API_KEY=${COLLEGE_SCORECARD_API_KEY:-TNfceNc2F9Fr1gChFrCbDOkDuRbUFkfqczqJs70L}
+      - FRED_API_KEY=${FRED_API_KEY:-a02c38a0e9e3e707e05d9e2aa0be5b41}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - fafsa-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+
+  # ==========================================
+  # PostgreSQL Database
+  # ==========================================
+  postgres:
+    image: postgres:16-alpine
+    container_name: fafsa-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=fafsa_user
+      - POSTGRES_PASSWORD=fafsa_password
+      - POSTGRES_DB=fafsa_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - fafsa-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fafsa_user -d fafsa_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # ==========================================
+  # Redis Cache
+  # ==========================================
+  redis:
+    image: redis:7-alpine
+    container_name: fafsa-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    networks:
+      - fafsa-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  # ==========================================
+  # Nginx Reverse Proxy (Production)
+  # ==========================================
+  nginx:
+    image: nginx:alpine
+    container_name: fafsa-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - web
+      - api
+    networks:
+      - fafsa-network
+    profiles:
+      - production
+
+# ==========================================
+# Networks
+# ==========================================
+networks:
+  fafsa-network:
+    driver: bridge
+
+# ==========================================
+# Volumes
+# ==========================================
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local

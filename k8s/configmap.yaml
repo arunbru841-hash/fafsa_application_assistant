@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fafsa-config
+  namespace: fafsa-assistant
+  labels:
+    app.kubernetes.io/name: fafsa-assistant
+data:
+  NODE_ENV: "production"
+  LOG_LEVEL: "info"
+  API_PORT: "3001"
+  WEB_PORT: "3000"
+  # External API endpoints
+  COLLEGE_SCORECARD_API_URL: "https://api.data.gov/ed/collegescorecard/v1"
+  FRED_API_URL: "https://api.stlouisfed.org/fred"
+  TREASURY_API_URL: "https://api.fiscaldata.treasury.gov/services/api/fiscal_service"

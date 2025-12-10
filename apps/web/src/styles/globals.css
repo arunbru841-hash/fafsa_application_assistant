@@ -1,0 +1,563 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import Source Sans Pro from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap');
+
+@layer base {
+  :root {
+    /* ===== USWDS Colors - StudentAid.gov Exact Values ===== */
+    /* Primary Blue Family */
+    --color-primary: #005ea2;
+    --color-primary-dark: #1a4480;
+    --color-primary-darker: #162e51;
+    --color-primary-darkest: #0b1526;
+    --color-primary-light: #73b3e7;
+    --color-primary-lighter: #d9e8f6;
+    --color-primary-lightest: #eff6fb;
+    --color-primary-vivid: #0050d8;
+    
+    /* Secondary Red Family */
+    --color-secondary: #d83933;
+    --color-secondary-dark: #b50909;
+    --color-secondary-darker: #8b0a03;
+    --color-secondary-light: #f2938c;
+    --color-secondary-lighter: #f3e1e4;
+    
+    /* Accent Cool (Cyan/Teal) Family */
+    --color-accent-cool: #00bde3;
+    --color-accent-cool-dark: #28a0cb;
+    --color-accent-cool-darker: #07648d;
+    --color-accent-cool-light: #97d4ea;
+    --color-accent-cool-lighter: #e1f3f8;
+    
+    /* Accent Warm (Orange) Family */
+    --color-accent-warm: #fa9441;
+    --color-accent-warm-dark: #c05600;
+    --color-accent-warm-light: #ffbc78;
+    --color-accent-warm-lighter: #f2e4d4;
+    
+    /* Warning (Gold) Family */
+    --color-warning: #e5a000;
+    --color-warning-dark: #936f38;
+    --color-warning-light: #ffbe2e;
+    --color-warning-lighter: #fef0c8;
+    
+    /* Error (Red) Family */
+    --color-error: #d54309;
+    --color-error-dark: #b50909;
+    --color-error-light: #f39268;
+    --color-error-lighter: #f4e3db;
+    
+    /* Success (Using Primary Blue - FAFSA doesn't use green) */
+    --color-success: #005ea2;
+    --color-success-dark: #1a4480;
+    --color-success-light: #73b3e7;
+    
+    /* Base/Neutral Grays */
+    --color-base: #71767a;
+    --color-base-dark: #565c65;
+    --color-base-darker: #3d4551;
+    --color-base-darkest: #1b1b1b;
+    --color-base-light: #a9aeb1;
+    --color-base-lighter: #dfe1e2;
+    --color-base-lightest: #f0f0f0;
+    
+    /* Ink and White */
+    --color-ink: #1b1b1b;
+    --color-white: #ffffff;
+    
+    /* Focus outline - Accessibility */
+    --focus-color: #2491ff;
+    --focus-width: 2px;
+    --focus-offset: 2px;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, var(--color-primary-lighter) 0%, var(--color-white) 100%);
+    --gradient-accent: linear-gradient(135deg, var(--color-accent-cool-lighter) 0%, var(--color-white) 100%);
+    --gradient-hero: linear-gradient(180deg, var(--color-primary-darker) 0%, var(--color-primary-dark) 100%);
+  }
+
+  * {
+    @apply border-gray-200;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white text-gray-900 antialiased;
+    font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+    font-size: 1.06rem;
+    line-height: 1.5;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Merriweather', Georgia, Cambria, 'Times New Roman', serif;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--color-ink);
+  }
+
+  h1 {
+    font-size: 2.44rem;
+    letter-spacing: -0.015em;
+  }
+
+  h2 {
+    font-size: 1.95rem;
+  }
+
+  h3 {
+    font-size: 1.34rem;
+  }
+
+  a {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+
+  a:hover {
+    color: var(--color-primary-dark);
+  }
+
+  a:visited {
+    color: #73b3e7;
+  }
+
+  /* USWDS Focus styles */
+  *:focus {
+    outline: var(--focus-width) solid var(--focus-color);
+    outline-offset: var(--focus-offset);
+  }
+}
+
+@layer components {
+  /* ===== USA BANNER (Official Government Site Banner) ===== */
+  .usa-banner {
+    @apply bg-gray-100;
+    font-size: 0.87rem;
+  }
+
+  .usa-banner__inner {
+    @apply max-w-7xl mx-auto px-4 py-2 flex items-center gap-2;
+  }
+
+  .usa-banner__flag {
+    width: 16px;
+    height: 11px;
+  }
+
+  /* ===== HEADER - StudentAid.gov Style ===== */
+  .usa-header {
+    @apply bg-primary-darker text-white;
+  }
+
+  .usa-header__inner {
+    @apply max-w-7xl mx-auto px-4 py-4 flex items-center justify-between;
+  }
+
+  .usa-logo {
+    @apply flex items-center gap-3;
+  }
+
+  .usa-logo__text {
+    @apply text-xl font-bold text-white no-underline;
+  }
+
+  .usa-nav {
+    @apply hidden lg:flex items-center gap-6;
+  }
+
+  .usa-nav__link {
+    @apply text-white no-underline font-semibold text-base hover:text-primary-light transition-colors;
+  }
+
+  .usa-nav__link--active {
+    @apply text-primary-light border-b-2 border-primary-light pb-1;
+  }
+
+  /* ===== BUTTONS - USWDS Style ===== */
+  .usa-button {
+    @apply inline-flex items-center justify-center px-5 py-3 font-bold text-base rounded-sm transition-colors cursor-pointer;
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+
+  .usa-button--primary {
+    @apply bg-primary text-white hover:bg-primary-dark active:bg-primary-darker;
+  }
+
+  .usa-button--secondary {
+    @apply bg-secondary text-white hover:bg-secondary-dark;
+  }
+
+  .usa-button--accent-cool {
+    @apply bg-accent-cool-darker text-white hover:bg-primary-dark;
+  }
+
+  .usa-button--outline {
+    @apply bg-transparent text-primary border-2 border-primary hover:bg-primary hover:text-white;
+  }
+
+  .usa-button--outline-inverse {
+    @apply bg-transparent text-white border-2 border-white hover:bg-white hover:text-primary-darker;
+  }
+
+  .usa-button--big {
+    @apply px-8 py-4 text-lg;
+  }
+
+  .usa-button--unstyled {
+    @apply bg-transparent text-primary underline hover:text-primary-dark p-0;
+  }
+
+  /* ===== CARDS - StudentAid.gov Style ===== */
+  .usa-card {
+    @apply bg-white border border-gray-200 rounded-sm overflow-hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .usa-card__container {
+    @apply p-6;
+  }
+
+  .usa-card__header {
+    @apply text-xl font-bold text-gray-900 mb-2;
+    font-family: 'Merriweather', serif;
+  }
+
+  .usa-card__body {
+    @apply text-gray-600;
+  }
+
+  .usa-card--flag {
+    @apply flex flex-row;
+  }
+
+  .usa-card--flag .usa-card__media {
+    @apply w-1/3 flex-shrink-0;
+  }
+
+  /* ===== HERO SECTION - StudentAid.gov Style ===== */
+  .usa-hero {
+    @apply bg-primary-darker text-white py-16 lg:py-24 relative overflow-hidden;
+  }
+
+  .usa-hero__inner {
+    @apply max-w-7xl mx-auto px-4;
+  }
+
+  .usa-hero__callout {
+    @apply max-w-2xl;
+  }
+
+  .usa-hero__heading {
+    @apply text-4xl lg:text-5xl font-bold text-white mb-6;
+    font-family: 'Merriweather', serif;
+  }
+
+  .usa-hero__tagline {
+    @apply text-xl text-primary-light mb-8;
+  }
+
+  /* ===== SECTION STYLING ===== */
+  .usa-section {
+    @apply py-12 lg:py-16;
+  }
+
+  .usa-section--dark {
+    @apply bg-primary-darker text-white;
+  }
+
+  .usa-section--light {
+    @apply bg-gray-100;
+  }
+
+  .usa-section__heading {
+    @apply text-3xl font-bold text-gray-900 mb-8 text-center;
+    font-family: 'Merriweather', serif;
+  }
+
+  /* ===== FOOTER - StudentAid.gov Style ===== */
+  .usa-footer {
+    background-color: #1b1b1b;
+    @apply text-white;
+  }
+
+  .usa-footer__primary {
+    background-color: #3d4551;
+    @apply py-8;
+  }
+
+  .usa-footer__secondary {
+    background-color: #1b1b1b;
+    @apply py-6;
+  }
+
+  .usa-footer__inner {
+    @apply max-w-7xl mx-auto px-4;
+  }
+
+  .usa-footer__nav {
+    @apply grid grid-cols-2 md:grid-cols-4 gap-8;
+  }
+
+  .usa-footer__nav-heading {
+    @apply text-sm font-bold text-white uppercase tracking-wide mb-4;
+  }
+
+  .usa-footer__nav-link {
+    @apply text-gray-400 no-underline hover:text-white block py-1;
+  }
+
+  .usa-footer__logo {
+    @apply flex items-center gap-4;
+  }
+
+  .usa-footer__logo-text {
+    @apply text-lg font-bold text-white;
+  }
+
+  .usa-footer__social-links {
+    @apply flex items-center gap-4;
+  }
+
+  .usa-footer__social-link {
+    @apply text-white hover:text-primary-light transition-colors;
+  }
+
+  /* ===== FORM ELEMENTS - USWDS Style ===== */
+  .usa-input {
+    @apply w-full border-2 border-gray-500 px-3 py-2 text-base rounded-sm bg-white;
+    max-width: 30rem;
+  }
+
+  .usa-input:focus {
+    @apply border-primary-vivid;
+    outline: var(--focus-width) solid var(--focus-color);
+    outline-offset: 0;
+  }
+
+  .usa-input--error {
+    @apply border-secondary-dark bg-red-50;
+  }
+
+  .usa-label {
+    @apply block text-gray-900 font-bold mb-1;
+  }
+
+  .usa-label--required::after {
+    content: " *";
+    @apply text-secondary-dark;
+  }
+
+  .usa-hint {
+    @apply text-gray-600 text-sm mb-1;
+  }
+
+  .usa-error-message {
+    @apply text-secondary-dark font-bold text-sm mt-1 flex items-center gap-1;
+  }
+
+  .usa-error-message::before {
+    content: "⚠";
+  }
+
+  /* ===== FORM SECTIONS WITH GRADIENTS ===== */
+  .usa-form-section {
+    @apply p-6 rounded-lg mb-6;
+    background: linear-gradient(135deg, #f0f4f8 0%, #ffffff 100%);
+    border: 1px solid #e5e7eb;
+  }
+
+  .usa-form-section--primary {
+    background: linear-gradient(135deg, #e7f1fa 0%, #f8fbff 100%);
+    border: 1px solid #73b3e7;
+  }
+
+  .usa-form-section--accent {
+    background: linear-gradient(135deg, #e5f6fa 0%, #f8feff 100%);
+    border: 1px solid #00bde3;
+  }
+
+  .usa-form-section__header {
+    @apply flex items-center gap-3 mb-4 pb-3 border-b border-gray-200;
+  }
+
+  .usa-form-section__icon {
+    @apply w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white;
+  }
+
+  .usa-form-section__title {
+    @apply text-lg font-bold text-primary-darker;
+  }
+
+  .usa-form-section__description {
+    @apply text-sm text-gray-600 mb-6;
+  }
+
+  /* Form Grid */
+  .usa-form-grid {
+    @apply grid gap-4;
+  }
+
+  .usa-form-grid--2col {
+    @apply grid-cols-1 md:grid-cols-2;
+  }
+
+  .usa-form-grid--3col {
+    @apply grid-cols-1 md:grid-cols-3;
+  }
+
+  /* ===== ALERTS - USWDS Style ===== */
+  .usa-alert {
+    @apply border-l-4 p-4 mb-4;
+  }
+
+  .usa-alert--info {
+    @apply bg-blue-50 border-primary;
+  }
+
+  .usa-alert--success {
+    @apply bg-blue-50 border-primary;
+  }
+
+  .usa-alert--warning {
+    @apply bg-yellow-50 border-warning;
+  }
+
+  .usa-alert--error {
+    @apply bg-red-50 border-error;
+  }
+
+  .usa-alert__heading {
+    @apply font-bold text-gray-900 mb-1;
+  }
+
+  .usa-alert__text {
+    @apply text-gray-900;
+  }
+
+  /* ===== STEP INDICATOR - StudentAid.gov Style ===== */
+  .usa-step-indicator {
+    @apply mb-8;
+  }
+
+  .usa-step-indicator__segments {
+    @apply flex items-center gap-1;
+  }
+
+  .usa-step-indicator__segment {
+    @apply flex-1 h-2 rounded-full bg-gray-200;
+  }
+
+  .usa-step-indicator__segment--complete {
+    @apply bg-primary;
+  }
+
+  .usa-step-indicator__segment--current {
+    @apply bg-accent-cool;
+  }
+
+  .usa-step-indicator__header {
+    @apply flex items-center gap-4 mt-4;
+  }
+
+  .usa-step-indicator__current-step {
+    @apply text-3xl font-bold text-primary;
+  }
+
+  .usa-step-indicator__total-steps {
+    @apply text-gray-600;
+  }
+
+  .usa-step-indicator__heading {
+    @apply text-xl font-bold text-gray-900;
+  }
+
+  /* ===== SUMMARY BOX ===== */
+  .usa-summary-box {
+    @apply bg-cyan-50 border border-cyan-700 rounded-sm p-6;
+  }
+
+  .usa-summary-box__heading {
+    @apply text-lg font-bold text-gray-900 mb-2;
+  }
+
+  .usa-summary-box__text {
+    @apply text-gray-900;
+  }
+
+  /* ===== PROCESS LIST ===== */
+  .usa-process-list {
+    @apply list-none p-0 m-0;
+  }
+
+  .usa-process-list__item {
+    @apply relative pl-12 pb-8 border-l-2 border-primary ml-4;
+  }
+
+  .usa-process-list__item:last-child {
+    @apply border-l-0;
+  }
+
+  .usa-process-list__item::before {
+    content: counter(usa-process-list);
+    counter-increment: usa-process-list;
+    @apply absolute -left-5 w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold text-lg;
+  }
+
+  .usa-process-list {
+    counter-reset: usa-process-list;
+  }
+
+  .usa-process-list__heading {
+    @apply text-xl font-bold text-gray-900 mb-2;
+  }
+
+  /* ===== LEGACY COMPATIBILITY ===== */
+  .card {
+    @apply usa-card;
+  }
+
+  .btn {
+    @apply usa-button;
+  }
+
+  .btn-primary {
+    @apply usa-button--primary;
+  }
+
+  .input {
+    @apply usa-input;
+  }
+
+  .label {
+    @apply usa-label;
+  }
+
+  /* Container */
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .gradient-primary {
+    @apply bg-gradient-to-r from-primary-darker to-primary-dark;
+  }
+
+  .gradient-overlay {
+    @apply bg-gradient-to-t from-black/60 to-transparent;
+  }
+
+  .section-padding {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+}

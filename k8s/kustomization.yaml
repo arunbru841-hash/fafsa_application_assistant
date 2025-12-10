@@ -1,0 +1,31 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+metadata:
+  name: fafsa-assistant
+
+namespace: fafsa-assistant
+
+resources:
+  - namespace.yaml
+  - configmap.yaml
+  - secrets.yaml
+  - postgres-statefulset.yaml
+  - redis-deployment.yaml
+  - api-deployment.yaml
+  - api-service.yaml
+  - web-deployment.yaml
+  - web-service.yaml
+  - ingress.yaml
+  - hpa.yaml
+  - network-policy.yaml
+
+commonLabels:
+  app.kubernetes.io/part-of: fafsa-assistant
+  app.kubernetes.io/managed-by: kustomize
+
+images:
+  - name: ghcr.io/your-org/fafsa-assistant/api
+    newTag: latest
+  - name: ghcr.io/your-org/fafsa-assistant/web
+    newTag: latest

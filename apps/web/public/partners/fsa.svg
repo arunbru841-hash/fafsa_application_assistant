@@ -1,0 +1,17 @@
+<svg width="200" height="80" viewBox="0 0 200 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Official-looking federal badge -->
+  <rect x="10" y="10" width="180" height="60" rx="4" fill="white" stroke="#003D7A" stroke-width="2"/>
+  
+  <!-- Eagle silhouette -->
+  <circle cx="40" cy="40" r="15" fill="#003D7A"/>
+  <path d="M40 32L35 40H45L40 32Z" fill="white"/>
+  <path d="M32 42C32 42 35 45 40 45C45 45 48 42 48 42" stroke="white" stroke-width="1.5" fill="none"/>
+  
+  <!-- Text -->
+  <text x="70" y="35" fill="#003D7A" font-family="Arial, sans-serif" font-size="18" font-weight="bold">Federal Student Aid</text>
+  <text x="70" y="50" fill="#666" font-family="Arial, sans-serif" font-size="10">U.S. Department of Education</text>
+  
+  <!-- Stars -->
+  <path d="M165 25L167 31H173L168 35L170 41L165 37L160 41L162 35L157 31H163L165 25Z" fill="#003D7A"/>
+  <path d="M180 25L182 31H188L183 35L185 41L180 37L175 41L177 35L172 31H178L180 25Z" fill="#003D7A"/>
+</svg>

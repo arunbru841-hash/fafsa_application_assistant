@@ -1,0 +1,23 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Certificate Background -->
+  <rect x="15" y="20" width="90" height="80" rx="4" fill="white" stroke="#0e7490" stroke-width="2"/>
+  <rect x="20" y="25" width="80" height="70" rx="2" fill="url(#soc2-gradient)"/>
+  
+  <!-- Award Ribbon -->
+  <circle cx="60" cy="55" r="18" fill="#0891b2" stroke="white" stroke-width="2"/>
+  <path d="M60 73L52 90L60 86L68 90L60 73Z" fill="#0891b2"/>
+  
+  <!-- Checkmark in circle -->
+  <path d="M52 55L57 60L68 48" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Text -->
+  <text x="60" y="30" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="10" font-weight="bold">SOC 2</text>
+  <text x="60" y="108" text-anchor="middle" fill="#0e7490" font-family="Arial, sans-serif" font-size="8">TYPE II</text>
+  
+  <defs>
+    <linearGradient id="soc2-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#155e75;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0e7490;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>
